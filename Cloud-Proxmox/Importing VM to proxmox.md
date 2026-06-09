@@ -61,4 +61,21 @@ Basically we craete an empty machine, now inside the console/terminal:
 ```
 qm importdisk <virt ID> machine.img VM
 ```
-This will allow the 
+This will allow the VM to see the disk, it will appear as "Unused disk 0"
+
+Then:
+
+```
+Click two times on "Unused Disk 0"
+Add
+```
+Once doing that we have succesfully imported a RAW image to a proxmox VM
+
+If you want to make this disk bootable go to:
+```
+Options
+Boot Order
+Enable: scsi0
+Draw it to the first boot option
+```
+
