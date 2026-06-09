@@ -59,5 +59,6 @@ rsync -avz -vv --progress  /path/to/qcow2 root@newserver:/path/to/import/
 Basically we craete an empty machine, now inside the console/terminal:
 
 ```
-
+qm importdisk <virt ID> machine.img VM
 ```
+This will allow the 
