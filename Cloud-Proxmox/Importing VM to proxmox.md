@@ -1,19 +1,20 @@
-# How do I import VM from one system to another
+# How do I import a VM from one system to another
 
-This guide will be used to know how to import virtual machines to a proxmox enviroment, in my case I moved VM from an old virsh server to a newer proxmox server
+This guide explains how to import virtual machines into a Proxmox environment. In my case, I moved VMs from an old `virsh` server to a newer Proxmox server.
 
 ## Rsync between servers
 
-Rsync is a very basic tool to move files or folders between two machines
+Rsync is a very basic tool used to move files or folders between two machines.
 
 ```
-rsync -avz -vv --progress  /path/to/qcow2 root@newserver:/path/to/import/
+rsync -avz -vv --progress /path/to/qcow2 root@newserver:/path/to/import/
 ```
-We need to move it inside the import folder from the proxmox server
 
-## Creation and import of the virtual machine 
+We need to move the image inside the import folder on the Proxmox server.
 
-Once the files move, inside the proxmox web-env we follow these instructions:
+## Creation and import of the virtual machine
+
+Once the files have been moved, inside the Proxmox web environment we follow these instructions:
 
 ```
 1. Create VM
@@ -28,20 +29,21 @@ Once the files move, inside the proxmox web-env we follow these instructions:
     5.3.1. Select the image you want to import
 6. CPU
 7. Memory
-8. Network (CHECK IF YOUR IMPORTED MACHINES REQUIERE SPECIFIC NETWORK SETTINGS)
+8. Network (CHECK IF YOUR IMPORTED MACHINES REQUIRE SPECIFIC NETWORK SETTINGS)
 9. Confirm
   9.1. Finish
 ```
 
-Once we do this the machines will be ready to use
+Once we do this, the machines will be ready to use.
 
 ## RAW images
 
-Sometimes we encounter this RAW images that can be hard to import, follow the steps:
+Sometimes we encounter RAW images that can be hard to import. Follow these steps:
 
 ```
-rsync -avz -vv --progress  /path/to/qcow2 root@newserver:/path/to/import/
+rsync -avz -vv --progress /path/to/image root@newserver:/path/to/import/
 ```
+
 ```
 1. Create VM
 2. Basic machine info
@@ -52,30 +54,41 @@ rsync -avz -vv --progress  /path/to/qcow2 root@newserver:/path/to/import/
   5.1. Delete disk
 6. CPU
 7. Memory
-8. Network (CHECK IF YOUR IMPORTED MACHINES REQUIERE SPECIFIC NETWORK SETTINGS)
+8. Network (CHECK IF YOUR IMPORTED MACHINES REQUIRE SPECIFIC NETWORK SETTINGS)
 9. Confirm
   9.1. Finish
 ```
-Basically we craete an empty machine, now inside the console/terminal:
+
+Basically, we create an empty machine. Now, inside the console/terminal:
 
 ```
 qm importdisk <virt ID> machine.img VM
 ```
-This will allow the VM to see the disk, it will appear as "Unused disk 0"
+
+This will allow the VM to see the disk. It will appear as "Unused disk 0".
 
 Then:
 
 ```
-Click two times on "Unused Disk 0"
+Double-click on "Unused Disk 0"
 Add
 ```
-Once doing that we have succesfully imported a RAW image to a proxmox VM
 
-If you want to make this disk bootable go to:
+After doing that, we have successfully imported a RAW image into a Proxmox VM.
+
+If you want to make this disk bootable, go to:
+
 ```
 Options
 Boot Order
 Enable: scsi0
-Draw it to the first boot option
+Drag it to the first boot option
 ```
 
+---
+
+Copyright © 2026 Pau Ubach
+
+This document is licensed under the GNU Free Documentation License v1.3 or later.
+
+SPDX-License-Identifier: GFDL-1.3-or-later
